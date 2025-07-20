@@ -1,0 +1,33 @@
+class Solution {
+  public:
+    int minChar(string &s) {
+        // code here
+        int n =s.size();
+        vector<int> lps(n*2+1,0);
+        string rev=s;
+        reverse(rev.begin(), rev.end());
+        s+='&';
+        s+=rev;
+        findlps(lps,s);
+        return n-lps[lps.size()-1];
+    }
+    void findlps(vector<int> &lps, string s){
+        int pre=0,suf=1;
+        while(suf<s.size()){
+            if(s[pre]==s[suf]){
+                lps[suf]=pre+1;
+                pre++,suf++;
+            }
+            else{
+                if(pre==0){
+                    lps[suf]=0;
+                    suf++;
+                }
+                else{
+                    pre=lps[pre-1];
+                }
+                
+            }
+        }
+    }
+};
